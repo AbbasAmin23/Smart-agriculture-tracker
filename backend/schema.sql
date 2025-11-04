@@ -38,3 +38,27 @@ CREATE TABLE forum_comments (
     FOREIGN KEY (post_id) REFERENCES forum_posts(id),
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
+
+CREATE TABLE sensors (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    type VARCHAR(255) NOT NULL,
+    location VARCHAR(255)
+);
+
+CREATE TABLE crops (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    planting_date DATE,
+    harvest_date DATE
+);
+
+CREATE TABLE sensor_data (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    sensor_id INT,
+    crop_id INT,
+    value VARCHAR(255) NOT NULL,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (sensor_id) REFERENCES sensors(id) ON DELETE CASCADE,
+    FOREIGN KEY (crop_id) REFERENCES crops(id) ON DELETE CASCADE
+);

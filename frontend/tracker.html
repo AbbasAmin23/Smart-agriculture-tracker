@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tracker</title>
+</head>
+<body>
+    <h2>Crop and Sensor Management</h2>
+
+    <h3>Sensors</h3>
+    <div id="sensors"></div>
+    <form id="new-sensor-form">
+        <h4>Add a Sensor</h4>
+        <input type="text" name="name" placeholder="Name" required><br>
+        <input type="text" name="type" placeholder="Type" required><br>
+        <input type="text" name="location" placeholder="Location" required><br>
+        <button type="submit">Add Sensor</button>
+    </form>
+
+    <hr>
+
+    <h3>Crops</h3>
+    <div id="crops"></div>
+    <form id="new-crop-form">
+        <h4>Add a Crop</h4>
+        <input type="text" name="name" placeholder="Name" required><br>
+        <label for="planting_date">Planting Date:</label>
+        <input type="date" name="planting_date" required><br>
+        <label for="harvest_date">Harvest Date:</label>
+        <input type="date" name="harvest_date" required><br>
+        <button type="submit">Add Crop</button>
+    </form>
+
+    <hr>
+
+    <h3>Sensor Data</h3>
+    <form id="new-sensor-data-form">
+        <h4>Add Sensor Data</h4>
+        <label for="sensor_id">Sensor:</label>
+        <select name="sensor_id" required></select><br>
+        <label for="crop_id">Crop:</label>
+        <select name="crop_id" required></select><br>
+        <input type="text" name="value" placeholder="Value" required><br>
+        <button type="submit">Add Data</button>
+    </form>
+
+    <hr>
+
+    <h3>View Sensor Data</h3>
+    <form id="view-sensor-data-form">
+        <label for="crop_id_view">Select a Crop to View Data:</label>
+        <select name="crop_id_view" required></select><br>
+        <button type="submit">View Data</button>
+    </form>
+    <div id="sensor-data"></div>
+
+    <script src="tracker.js"></script>
+</body>
+</html>
