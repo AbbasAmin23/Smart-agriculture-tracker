@@ -1,12 +1,31 @@
 
 document.addEventListener('DOMContentLoaded', () => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-        // Redirect to login if not authenticated
-        // For now, we'll allow anonymous access to the forum
-    }
+    let translations = {};
 
-    fetchPosts();
+    const fetchSessionAndPosts = async () => {
+        try {
+            const sessionResponse = await fetch('/backend/api/auth/get_session.php');
+            const sessionData = await sessionResponse.json();
+
+            if (!sessionData.loggedin) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            const lang = sessionData.language || 'ur'; // Default to Urdu if no language is set
+            document.getElementById('language-switcher').value = lang;
+
+            const postsResponse = await fetch('/backend/api/forum/get_posts.php');
+            const postsData = await postsResponse.json();
+            translations = postsData.translations;
+            displayPosts(postsData.posts);
+            updateUI(lang);
+        } catch (error) {
+            console.error('Error fetching session or posts:', error);
+        }
+    };
+
+    fetchSessionAndPosts();
 
     document.getElementById('new-post-form').addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -15,11 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (title && content) {
             try {
-                const response = await fetch('/api/forum/posts', {
+                const response = await fetch('/backend/api/forum/create_post.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
                     },
                     body: JSON.stringify({ title, content })
                 });
@@ -35,13 +53,43 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
+
+    document.getElementById('language-switcher').addEventListener('change', async (e) => {
+        const newLang = e.target.value;
+        try {
+            const response = await fetch('/backend/api/auth/switch_language.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ language: newLang })
+            });
+
+            if (response.ok) {
+                updateUI(newLang);
+            } else {
+                console.error('Failed to switch language');
+            }
+        } catch (error) {
+            console.error('Error switching language:', error);
+        }
+    });
+
+    function updateUI(lang) {
+        document.getElementById('forum-title').textContent = translations.forum_title;
+        document.getElementById('create-post-title').textContent = translations.create_new_post;
+        document.getElementById('post-title-label').textContent = translations.title;
+        document.getElementById('post-content-label').textContent = translations.content;
+        document.getElementById('post-button').textContent = translations.post;
+        document.getElementById('recent-posts-title').textContent = translations.recent_posts;
+    }
 });
 
 async function fetchPosts() {
     try {
-        const response = await fetch('/api/forum/posts');
-        const posts = await response.json();
-        displayPosts(posts);
+        const response = await fetch('/backend/api/forum/get_posts.php');
+        const data = await response.json();
+        displayPosts(data.posts);
     } catch (error) {
         console.error('Error fetching posts:', error);
     }

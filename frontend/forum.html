@@ -15,28 +15,35 @@
                 <li><a href="login.html">Login</a></li>
                 <li><a href="register.html">Register</a></li>
                 <li><a href="forum.html">Community Forum</a></li>
+                <li>
+                    <select id="language-switcher">
+                        <option value="en">English</option>
+                        <option value="ur">Urdu</option>
+                        <option value="pu">Punjabi</option>
+                    </select>
+                </li>
             </ul>
         </nav>
     </header>
     <main>
         <div class="forum-container">
-            <h2>Community Forum</h2>
+            <h2 id="forum-title">Community Forum</h2>
             <div class="post-form">
-                <h3>Create a New Post</h3>
+                <h3 id="create-post-title">Create a New Post</h3>
                 <form id="new-post-form">
                     <div class="form-group">
-                        <label for="post-title">Title</label>
+                        <label for="post-title" id="post-title-label">Title</label>
                         <input type="text" id="post-title" required>
                     </div>
                     <div class="form-group">
-                        <label for="post-content">Content</label>
+                        <label for="post-content" id="post-content-label">Content</label>
                         <textarea id="post-content" rows="5" required></textarea>
                     </div>
-                    <button type="submit" class="btn">Post</button>
+                    <button type="submit" class="btn" id="post-button">Post</button>
                 </form>
             </div>
             <div class="posts-container">
-                <h3>Recent Posts</h3>
+                <h3 id="recent-posts-title">Recent Posts</h3>
                 <!-- Posts will be dynamically loaded here -->
             </div>
         </div>

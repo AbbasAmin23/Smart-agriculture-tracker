@@ -12,9 +12,17 @@
         <nav>
             <a href="index.html" class="logo">Smart Farmer</a>
             <ul>
-                <li><a href="login.html">Login</a></li>
-                <li><a href="register.html">Register</a></li>
-                <li><a href="forum.html">Community Forum</a></li>
+                <li><a href="login.html" id="login-link">Login</a></li>
+                <li><a href="register.html" id="register-link">Register</a></li>
+                <li><a href="forum.html" id="forum-link">Community Forum</a></li>
+                <li>
+                    <select id="language-switcher">
+                        <option value="en">English</option>
+                        <option value="ur">Urdu</option>
+                        <option value="pu">Punjabi</option>
+                    </select>
+                </li>
+                <li><a href="#" id="logout-link" style="display: none;">Logout</a></li>
             </ul>
         </nav>
     </header>
@@ -22,30 +30,30 @@
     <main>
         <section class="hero">
             <div class="hero-text">
-                <h1>Welcome to the Smart Farmer's Dashboard</h1>
-                <p>Your one-stop solution for up-to-date market prices, weather forecasts, and a thriving farming community.</p>
-                <a href="register.html" class="btn">Get Started</a>
+                <h1 id="welcome-message">Welcome to the Smart Farmer's Dashboard</h1>
+                <p id="hero-text">Your one-stop solution for up-to-date market prices, weather forecasts, and a thriving farming community.</p>
+                <a href="register.html" class="btn" id="get-started-button">Get Started</a>
             </div>
         </section>
 
         <section class="features">
-            <h2>Our Features</h2>
+            <h2 id="features-title">Our Features</h2>
             <div class="feature-cards">
                 <div class="card">
-                    <h3>Market Data</h3>
-                    <p>Access real-time vegetable and fruit prices to make informed decisions.</p>
+                    <h3 id="market-data-title">Market Data</h3>
+                    <p id="market-data-text">Access real-time vegetable and fruit prices to make informed decisions.</p>
                 </div>
                 <div class="card">
-                    <h3>Weather Updates</h3>
-                    <p>Get the latest weather updates for your region to plan your farming activities.</p>
+                    <h3 id="weather-updates-title">Weather Updates</h3>
+                    <p id="weather-updates-text">Get the latest weather updates for your region to plan your farming activities.</p>
                 </div>
                 <div class="card">
-                    <h3>Price Trends</h3>
-                    <p>Visualize 7-day price trends to understand market dynamics.</p>
+                    <h3 id="price-trends-title">Price Trends</h3>
+                    <p id="price-trends-text">Visualize 7-day price trends to understand market dynamics.</p>
                 </div>
                 <div class="card">
-                    <h3>Community Forum</h3>
-                    <p>Connect with other farmers, share knowledge, and discuss challenges.</p>
+                    <h3 id="community-forum-title">Community Forum</h3>
+                    <p id="community-forum-text">Connect with other farmers, share knowledge, and discuss challenges.</p>
                 </div>
             </div>
         </section>
@@ -54,5 +62,6 @@
     <footer>
         <p>&copy; 2024 Smart Farmer's Dashboard. All rights reserved.</p>
     </footer>
+    <script src="app.js"></script>
 </body>
 </html>
