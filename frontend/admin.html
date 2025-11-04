@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+
+    <h2>Market Rates</h2>
+    <form id="market-rate-form">
+        <input type="text" id="product-name" placeholder="Product Name" required>
+        <input type="number" id="price" placeholder="Price" required>
+        <input type="date" id="date" required>
+        <input type="text" id="region" placeholder="Region" required>
+        <button type="submit">Add/Update Rate</button>
+    </form>
+
+    <h2>Product Management</h2>
+    <form id="product-management-form">
+        <input type="text" id="new-product-name" placeholder="New Product Name">
+        <button type="submit">Add Product</button>
+    </form>
+
+    <div id="product-list"></div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
