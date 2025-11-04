@@ -1,16 +1,14 @@
-
 CREATE TABLE users (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(255) UNIQUE NOT NULL,
+    username VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    role ENUM('admin', 'farmer') NOT NULL,
+    role VARCHAR(50) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE products (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(255) UNIQUE NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    name VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE prices (
@@ -19,17 +17,7 @@ CREATE TABLE prices (
     price DECIMAL(10, 2) NOT NULL,
     date DATE NOT NULL,
     region VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (product_id) REFERENCES products(id)
-);
-
-CREATE TABLE weather (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    city VARCHAR(255) NOT NULL,
-    temperature DECIMAL(5, 2),
-    humidity INT,
-    description VARCHAR(255),
-    date DATE NOT NULL
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 );
 
 CREATE TABLE forum_posts (
