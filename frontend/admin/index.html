@@ -1,0 +1,53 @@
+<html>
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+
+    <h2>Products</h2>
+    <form id="add-product-form">
+        <input type="text" id="product-name" placeholder="Product name" required>
+        <button type="submit">Add Product</button>
+    </form>
+    <br>
+    <table id="products-table" border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <hr>
+
+    <h2>Prices</h2>
+    <form id="add-price-form">
+        <input type="hidden" id="product-id">
+        <input type="number" id="price" placeholder="Price" required>
+        <input type="date" id="date" required>
+        <input type="text" id="region" placeholder="Region" required>
+        <button type="submit">Add Price</button>
+    </form>
+    <br>
+    <table id="prices-table" border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Price</th>
+                <th>Date</th>
+                <th>Region</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <script src="app.js"></script>
+</body>
+</html>
