@@ -5,13 +5,14 @@ session_start();
 
 if (!isset($_SESSION['user_id'])) {
     http_response_code(401);
-    echo json_encode(['status' => 'error', 'message' => 'User not logged in']);
-    exit;
+    exit('User not logged in');
 }
 
+$user_id = $_SESSION['user_id']; // Assuming sensors are linked to users
+
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-    $stmt = $pdoconnection->prepare('SELECT * FROM sensors');
-    $stmt->execute();
+    $stmt = $pdoconnection->prepare('SELECT * FROM sensors WHERE user_id = ?');
+    $stmt->execute([$user_id]);
     $sensors = $stmt->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode($sensors);
 }
@@ -21,8 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $type = $_POST['type'];
     $location = $_POST['location'];
 
-    $stmt = $pdoconnection->prepare('INSERT INTO sensors (name, type, location) VALUES (?, ?, ?)');
-    if ($stmt->execute([$name, $type, $location])) {
+    $stmt = $pdoconnection->prepare('INSERT INTO sensors (user_id, name, type, location) VALUES (?, ?, ?, ?)');
+    if ($stmt->execute([$user_id, $name, $type, $location])) {
         echo json_encode(['status' => 'success']);
     } else {
         echo json_encode(['status' => 'error', 'message' => 'Failed to add sensor']);

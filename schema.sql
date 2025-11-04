@@ -38,18 +38,22 @@ CREATE TABLE prices (
     FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
-CREATE TABLE sensors (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    type VARCHAR(255) NOT NULL,
-    location VARCHAR(255) NOT NULL
-);
-
 CREATE TABLE crops (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
     name VARCHAR(255) NOT NULL,
     planting_date DATE NOT NULL,
-    harvest_date DATE
+    harvest_date DATE,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE sensors (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    type VARCHAR(255) NOT NULL,
+    location VARCHAR(255) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE sensor_data (

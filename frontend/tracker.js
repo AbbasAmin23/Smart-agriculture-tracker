@@ -1,117 +1,101 @@
-const sensorsDiv = document.getElementById('sensors');
-const newSensorForm = document.getElementById('new-sensor-form');
-const cropsDiv = document.getElementById('crops');
-const newCropForm = document.getElementById('new-crop-form');
-const newSensorDataForm = document.getElementById('new-sensor-data-form');
-const viewSensorDataForm = document.getElementById('view-sensor-data-form');
-const sensorDataDiv = document.getElementById('sensor-data');
+document.addEventListener('DOMContentLoaded', () => {
+    // Forms
+    const addCropForm = document.getElementById('add-crop-form');
+    const addSensorForm = document.getElementById('add-sensor-form');
 
-const sensorSelect = newSensorDataForm.querySelector('select[name="sensor_id"]');
-const cropSelect = newSensorDataForm.querySelector('select[name="crop_id"]');
-const cropSelectView = viewSensorDataForm.querySelector('select[name="crop_id_view"]');
+    // Display areas
+    const cropList = document.getElementById('crop-list');
+    const sensorList = document.getElementById('sensor-list');
+    const sensorDataDisplay = document.getElementById('sensor-data-display');
 
-function fetchSensors() {
-    fetch('../backend/sensors.php')
-        .then(response => response.json())
-        .then(sensors => {
-            sensorsDiv.innerHTML = '';
-            sensorSelect.innerHTML = '';
-            sensors.forEach(sensor => {
-                const sensorElement = document.createElement('div');
-                sensorElement.innerHTML = `<p>${sensor.name} (${sensor.type}) at ${sensor.location}</p>`;
-                sensorsDiv.appendChild(sensorElement);
+    let selectedCropId = null;
 
-                const option = document.createElement('option');
-                option.value = sensor.id;
-                option.textContent = sensor.name;
-                sensorSelect.appendChild(option);
+    // Fetch and display crops
+    function fetchCrops() {
+        fetch('../backend/crops.php')
+            .then(response => response.json())
+            .then(crops => {
+                cropList.innerHTML = '<h4>Your Crops</h4>';
+                crops.forEach(crop => {
+                    const cropEl = document.createElement('div');
+                    cropEl.classList.add('crop-item');
+                    cropEl.innerHTML = `<span>${crop.name} (Planted: ${crop.planting_date})</span>`;
+                    cropEl.addEventListener('click', () => {
+                        selectedCropId = crop.id;
+                        fetchSensors(); // Refresh sensor list for the selected crop
+                    });
+                    cropList.appendChild(cropEl);
+                });
             });
-        });
-}
+    }
 
-function fetchCrops() {
-    fetch('../backend/crops.php')
-        .then(response => response.json())
-        .then(crops => {
-            cropsDiv.innerHTML = '';
-            cropSelect.innerHTML = '';
-            cropSelectView.innerHTML = '';
-            crops.forEach(crop => {
-                const cropElement = document.createElement('div');
-                cropElement.innerHTML = `<p>${crop.name} (Planted: ${crop.planting_date}, Harvest: ${crop.harvest_date})</p>`;
-                cropsDiv.appendChild(cropElement);
-
-                const option = document.createElement('option');
-                option.value = crop.id;
-                option.textContent = crop.name;
-                cropSelect.appendChild(option);
-
-                const optionView = document.createElement('option');
-                optionView.value = crop.id;
-                optionView.textContent = crop.name;
-                cropSelectView.appendChild(optionView);
-            });
-        });
-}
-
-newSensorForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const formData = new FormData(this);
-    fetch('../backend/sensors.php', {method: 'POST', body: formData})
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                newSensorForm.reset();
-                fetchSensors();
-            } else {
-                alert(data.message);
-            }
-        });
-});
-
-newCropForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const formData = new FormData(this);
-    fetch('../backend/crops.php', {method: 'POST', body: formData})
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                newCropForm.reset();
+    // Add a new crop
+    addCropForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const formData = new FormData(addCropForm);
+        fetch('../backend/crops.php', { method: 'POST', body: formData })
+            .then(() => {
+                addCropForm.reset();
                 fetchCrops();
-            } else {
-                alert(data.message);
-            }
-        });
-});
-
-newSensorDataForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const formData = new FormData(this);
-    fetch('../backend/sensor_data.php', {method: 'POST', body: formData})
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                newSensorDataForm.reset();
-            } else {
-                alert(data.message);
-            }
-        });
-});
-
-viewSensorDataForm.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const cropId = new FormData(this).get('crop_id_view');
-    fetch(`../backend/sensor_data.php?crop_id=${cropId}`)
-        .then(response => response.json())
-        .then(data => {
-            sensorDataDiv.innerHTML = '';
-            data.forEach(d => {
-                const dataElement = document.createElement('div');
-                dataElement.innerHTML = `<p>Value: ${d.value} at ${d.timestamp}</p>`;
-                sensorDataDiv.appendChild(dataElement);
             });
-        });
-});
+    });
 
-fetchSensors();
-fetchCrops();
+    // Fetch and display sensors
+    function fetchSensors() {
+        fetch('../backend/sensors.php')
+            .then(response => response.json())
+            .then(sensors => {
+                sensorList.innerHTML = '<h4>Your Sensors</h4>';
+                sensors.forEach(sensor => {
+                    const sensorEl = document.createElement('div');
+                    sensorEl.classList.add('sensor-item');
+                    sensorEl.innerHTML = `<span>${sensor.name} (${sensor.type}) at ${sensor.location}</span>`;
+                    sensorEl.addEventListener('click', () => {
+                        if (selectedCropId) {
+                            fetchSensorData(sensor.id, selectedCropId);
+                        } else {
+                            alert('Please select a crop first.');
+                        }
+                    });
+                    sensorList.appendChild(sensorEl);
+                });
+            });
+    }
+
+    // Add a new sensor
+    addSensorForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const formData = new FormData(addSensorForm);
+        fetch('../backend/sensors.php', { method: 'POST', body: formData })
+            .then(() => {
+                addSensorForm.reset();
+                fetchSensors();
+            });
+    });
+
+    // Fetch and display sensor data
+    function fetchSensorData(sensorId, cropId) {
+        fetch(`../backend/sensor_data.php?sensor_id=${sensorId}&crop_id=${cropId}`)
+            .then(response => response.json())
+            .then(data => {
+                sensorDataDisplay.innerHTML = `<canvas id="sensor-chart" width="400" height="200"></canvas>`;
+                const ctx = document.getElementById('sensor-chart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: data.map(d => new Date(d.timestamp).toLocaleString()),
+                        datasets: [{
+                            label: 'Sensor Readings',
+                            data: data.map(d => d.value),
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            tension: 0.1
+                        }]
+                    }
+                });
+            });
+    }
+
+    // Initial fetches
+    fetchCrops();
+    fetchSensors();
+});
