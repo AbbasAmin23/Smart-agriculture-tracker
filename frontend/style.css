@@ -1,61 +1,115 @@
+
 body {
-    font-family: sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
+    background-color: #f4f4f4;
+    color: #333;
 }
 
 header {
-    background-color: #333;
+    background-color: #2c3e50;
     color: white;
-    padding: 1rem;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-nav a {
+nav .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
     color: white;
     text-decoration: none;
-    margin: 0 1rem;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav ul li {
+    margin-left: 1.5rem;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: #1abc9c;
 }
 
 main {
-    padding: 1rem;
-}
-
-section {
-    margin-bottom: 2rem;
-}
-
-.weather-card {
-    border: 1px solid #ccc;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    display: inline-block;
-    width: 200px;
-    text-align: center;
-}
-
-.weather-icon {
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    padding: 2rem;
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: calc(100vh - 160px);
 }
 
-.weather-icon.blue {
-    background-color: lightblue;
+.form-container {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 400px;
 }
 
-.weather-icon.yellow {
-    background-color: lightyellow;
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
 }
 
-.weather-icon.green {
-    background-color: lightgreen;
+.form-group {
+    margin-bottom: 1rem;
 }
 
-#comparison-chart-container {
-    display: none;
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
 }
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.btn {
+    width: 100%;
+    background-color: #1abc9c;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #16a085;
+}
+
+footer {
+    background-color: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+

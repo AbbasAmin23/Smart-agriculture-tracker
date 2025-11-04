@@ -1,19 +1,49 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Forum</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Forum</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h2>Forum</h2>
-    <div id="posts"></div>
-    <hr>
-    <h3>New Post</h3>
-    <form id="new-post-form">
-        <input type="text" name="title" placeholder="Title" required><br>
-        <textarea name="content" placeholder="Content" required></textarea><br>
-        <button type="submit">Post</button>
-    </form>
-
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Smart Farmer</a>
+            <ul>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="register.html">Register</a></li>
+                <li><a href="forum.html">Community Forum</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="forum-container">
+            <h2>Community Forum</h2>
+            <div class="post-form">
+                <h3>Create a New Post</h3>
+                <form id="new-post-form">
+                    <div class="form-group">
+                        <label for="post-title">Title</label>
+                        <input type="text" id="post-title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="post-content">Content</label>
+                        <textarea id="post-content" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn">Post</button>
+                </form>
+            </div>
+            <div class="posts-container">
+                <h3>Recent Posts</h3>
+                <!-- Posts will be dynamically loaded here -->
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Smart Farmer's Dashboard. All rights reserved.</p>
+    </footer>
     <script src="forum.js"></script>
 </body>
 </html>

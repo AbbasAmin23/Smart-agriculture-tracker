@@ -1,53 +1,55 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farmer Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Farmer's Dashboard</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 </head>
 <body>
     <header>
-        <h1>Farmer Dashboard</h1>
         <nav>
-            <a href="farmer.html">Farmer Dashboard</a>
-            <a href="forum.html">Forum</a>
-            <a href="tracker.html">Tracker</a>
+            <a href="index.html" class="logo">Smart Farmer</a>
+            <ul>
+                <li><a href="#market-prices">Market Prices</a></li>
+                <li><a href="#weather">Weather</a></li>
+                <li><a href="forum.html">Community Forum</a></li>
+                <li><a href="#" id="logout">Logout</a></li>
+            </ul>
         </nav>
     </header>
 
     <main>
-        <section id="market-prices-section">
+        <section id="market-prices">
             <h2>Market Prices</h2>
-            <div id="price-list"></div>
-        </section>
-
-        <section id="price-comparison-section">
-            <h2>Compare Prices</h2>
-            <form id="compare-form">
-                <select id="product-select" multiple size="5"></select>
-                <button type="submit">Compare</button>
-            </form>
-            <div id="comparison-chart-container">
-                <canvas id="comparison-chart"></canvas>
+            <div class="search-container">
+                <input type="text" id="search-bar" placeholder="Search for a vegetable or fruit...">
+            </div>
+            <div id="price-trends-container">
+                <!-- Price trends will be displayed here -->
             </div>
         </section>
 
-        <section id="weather-section">
-            <h2>Weather</h2>
-            <div id="weather-map" style="height: 400px;"></div>
-            <div id="weather"></div>
+        <section id="weather">
+            <h2>Weather Updates</h2>
+            <div id="weather-container">
+                <!-- Weather updates will be displayed here -->
+            </div>
         </section>
 
-        <section id="smart-advice-section">
+        <section id="smart-advice">
             <h2>Smart Farmer Advice</h2>
-            <div id="advice"></div>
+            <div id="advice-container">
+                <!-- AI-based advice will be displayed here -->
+            </div>
         </section>
     </main>
 
+    <footer>
+        <p>&copy; 2024 Smart Farmer's Dashboard. All rights reserved.</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="farmer.js"></script>
 </body>
 </html>

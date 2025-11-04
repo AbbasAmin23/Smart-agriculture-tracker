@@ -1,19 +1,51 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Register</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Smart Farmer's Dashboard</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h2>Register</h2>
-    <form id="register-form">
-        <input type="text" name="username" placeholder="Username" required><br>
-        <input type="password" name="password" placeholder="Password" required><br>
-        <select name="role" required>
-            <option value="farmer">Farmer</option>
-            <option value="buyer">Buyer</option>
-        </select><br>
-        <button type="submit">Register</button>
-    </form>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Smart Farmer</a>
+            <ul>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="register.html">Register</a></li>
+                <li><a href="forum.html">Community Forum</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="form-container">
+            <h2>Register</h2>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="role">Role</label>
+                    <select id="role" name="role" required>
+                        <option value="farmer">Farmer</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Register</button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Smart Farmer's Dashboard. All rights reserved.</p>
+    </footer>
     <script src="register.js"></script>
 </body>
 </html>

@@ -1,31 +1,51 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Admin Dashboard</h1>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">Smart Farmer</a>
+            <ul>
+                <li><a href="#manage-data">Manage Data</a></li>
+                <li><a href="#" id="logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
 
-    <h2>Market Rates</h2>
-    <form id="market-rate-form">
-        <input type="text" id="product-name" placeholder="Product Name" required>
-        <input type="number" id="price" placeholder="Price" required>
-        <input type="date" id="date" required>
-        <input type="text" id="region" placeholder="Region" required>
-        <button type="submit">Add/Update Rate</button>
-    </form>
+    <main>
+        <section id="manage-data">
+            <h2>Manage Market Data</h2>
+            <div class="form-container">
+                <h3>Add/Update Item</h3>
+                <form id="item-form">
+                    <div class="form-group">
+                        <label for="item-name">Item Name</label>
+                        <input type="text" id="item-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="item-price">Price</label>
+                        <input type="number" id="item-price" required>
+                    </div>
+                    <button type="submit" class="btn">Save</button>
+                </form>
+            </div>
 
-    <h2>Product Management</h2>
-    <form id="product-management-form">
-        <input type="text" id="new-product-name" placeholder="New Product Name">
-        <button type="submit">Add Product</button>
-    </form>
+            <div id="items-list">
+                <h3>Existing Items</h3>
+                <!-- Items will be listed here -->
+            </div>
+        </section>
+    </main>
 
-    <div id="product-list"></div>
-
+    <footer>
+        <p>&copy; 2024 Smart Farmer's Dashboard. All rights reserved.</p>
+    </footer>
     <script src="admin.js"></script>
 </body>
 </html>

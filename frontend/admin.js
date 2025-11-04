@@ -1,56 +1,67 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const marketRateForm = document.getElementById('market-rate-form');
-    const productManagementForm = document.getElementById('product-management-form');
-    const productList = document.getElementById('product-list');
 
-    // Fetch and display products
-    function fetchProducts() {
-        fetch('../backend/products.php')
-            .then(response => response.json())
-            .then(products => {
-                productList.innerHTML = '<h3>Existing Products</h3>';
-                products.forEach(product => {
-                    const productEl = document.createElement('div');
-                    productEl.innerHTML = `<span>${product.name}</span> <button data-id="${product.id}" class="delete-btn">Delete</button>`;
-                    productList.appendChild(productEl);
-                });
-            });
+document.addEventListener('DOMContentLoaded', () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = 'login.html';
     }
 
-    // Handle market rate form submission
-    marketRateForm.addEventListener('submit', (e) => {
+    fetchItems();
+
+    document.getElementById('logout').addEventListener('click', () => {
+        localStorage.removeItem('token');
+        window.location.href = 'login.html';
+    });
+
+    document.getElementById('item-form').addEventListener('submit', async (e) => {
         e.preventDefault();
-        const formData = new FormData(marketRateForm);
-        fetch('../backend/prices.php', { method: 'POST', body: formData })
-            .then(() => {
-                marketRateForm.reset();
-                alert('Market rate updated!');
+        const itemName = document.getElementById('item-name').value;
+        const itemPrice = document.getElementById('item-price').value;
+
+        try {
+            const response = await fetch('/api/prices', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ name: itemName, price: itemPrice })
             });
-    });
-
-    // Handle new product form submission
-    productManagementForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const newProductName = document.getElementById('new-product-name').value;
-        if (newProductName) {
-            const formData = new FormData();
-            formData.append('name', newProductName);
-            fetch('../backend/products.php', { method: 'POST', body: formData })
-                .then(() => {
-                    productManagementForm.reset();
-                    fetchProducts();
-                });
+            if (response.ok) {
+                fetchItems();
+                document.getElementById('item-form').reset();
+            } else {
+                console.error('Failed to save item');
+            }
+        } catch (error) {
+            console.error('Error saving item:', error);
         }
     });
-
-    // Handle product deletion
-    productList.addEventListener('click', (e) => {
-        if (e.target.classList.contains('delete-btn')) {
-            const productId = e.target.dataset.id;
-            fetch(`../backend/products.php?id=${productId}`, { method: 'DELETE' })
-                .then(() => fetchProducts());
-        }
-    });
-
-    fetchProducts();
 });
+
+async function fetchItems() {
+    try {
+        const response = await fetch('/api/prices');
+        const items = await response.json();
+        displayItems(items);
+    } catch (error) {
+        console.error('Error fetching items:', error);
+    }
+}
+
+function displayItems(items) {
+    const listContainer = document.getElementById('items-list');
+    listContainer.innerHTML = '<h3>Existing Items</h3>';
+    items.forEach(item => {
+        const itemElement = document.createElement('div');
+        itemElement.className = 'item';
+        itemElement.innerHTML = `
+            <span>${item.name} - ${item.price}</span>
+            <div>
+                <button class="btn-edit">Edit</button>
+                <button class="btn-delete">Delete</button>
+            </div>
+        `;
+        listContainer.appendChild(itemElement);
+    });
+}
+
